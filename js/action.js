@@ -1,17 +1,17 @@
-window.class_data =[{
+window.class_data = [{
     "courseName": "人工智能",
     "courseID": "CS304",
-    "credit":3,
+    "credit": 3,
     "note": "课程系统完整地讲解当今整地讲解当今整地讲解当今整地讲解当今主流当今整地对xxx...",
     "classes": [{
         "teachers": "唐柯",
-        "classinfo": ["周二3-4节 荔园一栋101","周五5-6节 荔园6栋403"],
+        "classinfo": ["周二3-4节 荔园一栋101", "周五5-6节 荔园6栋403"],
         "classnum": 101,
         "period": [2, 2, 5, 3]
     },
         {
             "teachers": "唐柯",
-            "classinfo": ["周二3-4节 荔园一栋101","周三5-6节 荔园6栋403"],
+            "classinfo": ["周二3-4节 荔园一栋101", "周三5-6节 荔园6栋403"],
             "classnum": 101,
             "period": [2, 2, 3, 3]
         }
@@ -22,12 +22,20 @@ window.class_data =[{
         "courseID": "CS303",
         "classes": [{
             "teachers": "张誉群",
-            "classinfo": ["周四3-4节 荔园一栋101","周三5-6节 荔园6栋403"],
+            "classinfo": ["周四3-4节 荔园一栋101", "周三5-6节 荔园6栋403"],
             "classnum": 101,
             "period": [4, 2, 3, 3]
         }]
     }
 ];
+window.labels_title = {"Grade": "面向年级", "CourseType": "课程性质", "Departments": "院系", "day": "星期", "interval": "节次"};
+window.labels = {
+    "Grade": "大一 大二 大三 大四",
+    "CourseType": "必修 选修",
+    "Departments": "通识基础 数学系 物理系 化学系 生物系 计算机系 电子系 地空系 海洋系 材料系 环境系 机械系 生医工系 金融系 人文中心 社科中心 语言中心 艺术中心 体育中心",
+    "day": "星期一 星期二 星期三 星期四 星期五 星期六 星期日",
+    "interval": "1-2节 3-4节 5-6节 7-8节 9-10节 11节"
+};
 
 window.onload = function () {
     document.getElementById("commit_Edit").style.display = "none";
@@ -82,8 +90,21 @@ $(document).ready(function () {
         minimumCountColumns: 2,
         smartDisplay: true,
         onClickRow: function (row, $element) {
-            // alert(row.html);
-            $('#myModal').modal('show');
+            var courseModal = $('#myModal');
+            courseModal.modal('show');
+            $('#myModal h2')[0].innerHTML = row['courseName']+'('+row['courseID']+')'+'--课程信息';
+            var currentCourse;
+
+            for(var i in window.class_data){
+                if (window.class_data[i]["courseID"]===row['courseID']) {
+                    currentCourse = window.class_data[i];
+                    break;
+                }
+
+            }
+            $('#myModal h5')[0].innerHTML = currentCourse['note'];
+            $('#myModal button')[1].id = i;
+
             // $('.info').removeClass('info');//移除class
             // $($element).addClass('info');//添加class
             // $('.course_card').css("display", "inline-block");
@@ -103,12 +124,11 @@ $(document).ready(function () {
         }, {
             field: 'lecturer',
             title: '任课教师',
-            class: "col-md-2"
+            class: "col-md-1"
         }, {
             field: 'note',
-            title: '备注',
-            rowspan: 1,
-            class: "col-md-7"
+            title: '课程简介',
+            class: "col-md-8"
         },
         ],
 
@@ -129,7 +149,7 @@ function search_class() {
         anysc: false,
         data: JSON.stringify(data),  //转化字符串
         contentType: 'application/json',
-        dataType:'json',
+        dataType: 'json',
         success: function (rdata) { //成功的话，得到消息
             //rdata's type is json
             //returnClass(data);
@@ -140,13 +160,12 @@ function search_class() {
         "courseID": "CS303",
         "classes": [{
             "teachers": "张誉群",
-            "classinfo": ["周四3-4节 荔园一栋101","周三5-6节 荔园6栋403"],
+            "classinfo": ["周四3-4节 荔园一栋101", "周三5-6节 荔园6栋403"],
             "classnum": 101,
             "period": [4, 2, 3, 3]
         }]
     }];
     refreshCourseTable(rdata);
-
 
 
 }
@@ -157,7 +176,7 @@ function pull_course() {
         "courseID": "CS303",
         "classes": [{
             "teachers": "张誉群",
-            "classinfo": ["周四3-4节 荔园一栋101","周三5-6节 荔园6栋403"],
+            "classinfo": ["周四3-4节 荔园一栋101", "周三5-6节 荔园6栋403"],
             "classnum": 101,
             "period": [4, 2, 3, 3]
         }]
@@ -187,6 +206,30 @@ function showFullLabel() {
 
 function searchByLebel() {
     var datal = {"Grade": [], "Departments": [], "CourseType": [], "interval": [], "day": []}; //dictionary
+
+    $("#selected_label button").each(function(){
+        var label = this.innerHTML;
+
+            for(var key in window.labels){
+                var temp = window.labels[key];
+                var has=temp.indexOf(label)>-1;
+                if (has) {
+                    // alert(key+" "+label);
+                    datal[key].push(label);
+                    break;
+                }
+
+            }
+
+
+    });
+
+    for(var key in datal) {
+        if (datal[key].length===0) {
+            delete datal[key];
+        }
+    }
+
     $.ajax({
         type: 'GET',
         url: "/searchLabel",
@@ -205,25 +248,25 @@ function searchByLebel() {
         "lecturer": "唐珂",
         "classes": [{
             "teachers": "唐珂",
-            "classinfo": ["周四3-4节 荔园一栋101","周三5-6节 荔园6栋403"],
+            "classinfo": ["周四3-4节 荔园一栋101", "周三5-6节 荔园6栋403"],
             "classnum": 101,
             "period": [4, 2, 3, 3]
         }]
-    },{
+    }, {
         "courseName": "人工智能",
         "courseID": "CS303",
         "classes": [{
             "teachers": "唐珂",
-            "classinfo": ["周四3-4节 荔园一栋101","周三5-6节 荔园6栋403"],
+            "classinfo": ["周四3-4节 荔园一栋101", "周三5-6节 荔园6栋403"],
             "classnum": 101,
             "period": [4, 2, 3, 3]
         }]
-    },{
+    }, {
         "courseName": "人工智能",
         "courseID": "CS303",
         "classes": [{
             "teachers": "唐珂",
-            "classinfo": ["周四3-4节 荔园一栋101","周三5-6节 荔园6栋403"],
+            "classinfo": ["周四3-4节 荔园一栋101", "周三5-6节 荔园6栋403"],
             "classnum": 101,
             "period": [4, 2, 3, 3]
         }]
@@ -243,23 +286,16 @@ function showSelectedLabel() {
 }
 
 function generate_labels() {
-    var labels_title = {"grade": "面向年级", "character": "课程性质", "department": "面向院系", "week": "星期", "time": "节次"};
-    var labels = {
-        "grade": "大一 大二 大三 大四",
-        "character": "必修 选修",
-        "department": "通识基础 数学系 物理系 化学系 生物系 计算机系 电子系 地空系 海洋系 材料系 环境系 机械系 生医工系 金融系 人文中心 社科中心 语言中心 艺术中心 体育中心",
-        "week": "星期一 星期二 星期三 星期四 星期五 星期六 星期日",
-        "time": "1-2节 3-4节 5-6节 7-8节 9-10节 11节"
-    };
+
 
     var labels_obj = [];
-    for (var i in labels) {
+    for (var i in window.labels) {
         var l_obj = document.createElement('div');
         l_obj.classList.add("label_set");
         l_obj.classList.add("col-md-6");
-        var ls = labels[i].split(" ");
+        var ls = window.labels[i].split(" ");
         var title_obj = document.createElement("h4");
-        title_obj.innerHTML = labels_title[i];
+        title_obj.innerHTML = window.labels_title[i];
         title_obj.classList.add("label_title");
         l_obj.appendChild(title_obj);
         for (var j in ls) {
@@ -325,8 +361,7 @@ function select_label(obj) {
         obj.setAttribute("title", "unselected");
         var shown = document.getElementById("show_" + obj.id);
         document.getElementById("selected_label").removeChild(shown);
-    }
-    else {
+    } else {
         var cname = obj.id;
         var true_name = cname.substring(5);
         obj.parentElement.removeChild(obj);
@@ -335,6 +370,14 @@ function select_label(obj) {
         obj.setAttribute("class", "w3-btn w3-white w3-border w3-border col-md-3");
         obj.setAttribute("title", "unselected");
     }
+
+}
+
+
+function selectCourse(obj) {
+    // alert(obj.id);
+    var s = window.class_data[parseInt(obj.id)];
+    insertCard([s]);
 
 }
 
