@@ -58,9 +58,10 @@ function loadCourseTable() {
     oDiv1.onmouseover = function () {
         startMove(oDiv1, 'left', begin + oDiv1.offsetWidth);
     };
-    oDiv1.onmouseout = function () {
-        startMove(oDiv1, 'left', begin);
-    };
+    // oDiv1.onmouseout = function () {
+    //     setTimeout("", 2000);
+    //     startMove(oDiv1, 'left', begin);
+    // };
     var oUl_course = document.getElementById('courseList');
     var oBtn_insert = document.getElementById('insert');
     // oBtn_insert.onclick = "insertCard()";
