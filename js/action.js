@@ -105,9 +105,6 @@ $(document).ready(function () {
             $('#myModal h5')[0].innerHTML = currentCourse['note'];
             $('#myModal button')[1].id = i;
 
-            // $('.info').removeClass('info');//移除class
-            // $($element).addClass('info');//添加class
-            // $('.course_card').css("display", "inline-block");
         },
         columns: [{
             field: 'courseID',
@@ -190,17 +187,6 @@ function showFullLabel() {
     document.getElementById("commit_Edit").style.display = "inline";
     document.getElementById("all_label").style.display = "inline";
     document.getElementById("selected_label").classList.replace("col-md-12", "col-md-2");
-
-    /*    var data = {
-            "class_id": "1",
-            "class_name": "2",
-            "credit": "3",
-            "lecture": "4",
-            "capacity": "5",
-            "current_number": "6"
-        };
-        $('#class_table').bootstrapTable('prepend', data);*/
-
 
 }
 
@@ -304,8 +290,6 @@ function generate_labels() {
             var label_name = ls[j];
 
             var single_label = document.createElement("button");
-            // single_label.id = label_name;
-            // single_label.classList.add("label_button");
 
             single_label.setAttribute("onclick", "select_label(this)");
 
@@ -318,13 +302,11 @@ function generate_labels() {
             single_label.innerHTML = label_name;
             l_obj.appendChild(single_label);
 
-            // single_label.classList.add("col-md-3");
         }
 
 
         labels_obj.push(l_obj);
-        // var br = document.createElement("br");
-        // labels_obj.push(br);
+
     }
 
     return labels_obj;
@@ -370,7 +352,6 @@ function select_label(obj) {
         obj.setAttribute("class", "w3-btn w3-white w3-border w3-border col-md-3");
         obj.setAttribute("title", "unselected");
     }
-
 }
 
 
@@ -381,19 +362,4 @@ function selectCourse(obj) {
 
 }
 
-/*function add_class_row() {
-    return {
-        "class_id": "1",
-        "class_name": "2",
-        "credit": "3",
-        "lecture": "4",
-        "capacity": "5",
-        "current_number": "6"
-    };
-}*/
 
-/*
-function show_class_card(obj) {
-
-    alert("AMD!yes!")
-}*/
