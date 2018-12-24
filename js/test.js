@@ -233,9 +233,11 @@ function getRandomColor(){
 function postData(_type, _data){
 	$.ajax({
 		type: _type,
-		url: "/course",
-		data: _data,
+		url: "/classModify",
+		anysc: false,
+		data: JSON.stringify(_data),
 		contentType: 'application/json; charset=UTF-8',
+		dataType:'json',
 		seccess: function(data){
 			
 		}
