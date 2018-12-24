@@ -132,7 +132,7 @@ function fillTable(obj) {
 		}
 		
 		window.rcoin -= parseInt(coin);
-		postData('POST', window.data[id]);
+		postData('ADD', window.data[id]);
 		console.log('post '+JSON.stringify(window.data[id]));
 		
 		// 选中课程禁止修改选课币
@@ -183,7 +183,7 @@ function clearCourse(ot, aBtns) {
 
 		}
 		window.rcoin += parseInt(window.data[id].coin);
-		postData('POST', window.data[id]);
+		postData('MODIFY', window.data[id]);
 		updateRcoin();
 		console.log('post '+JSON.stringify(window.data[id]));
 	}
@@ -232,8 +232,8 @@ function getRandomColor(){
 
 function postData(_type, _data){
 	$.ajax({
-		type: _type,
-		url: "/classModify",
+		type: "POST",
+		url: "/class"+_type,
 		anysc: false,
 		data: JSON.stringify(_data),
 		contentType: 'application/json; charset=UTF-8',
