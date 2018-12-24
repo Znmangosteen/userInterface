@@ -59,6 +59,7 @@ function loadCourseTable() {
         startMove(oDiv1, 'left', begin + oDiv1.offsetWidth);
     };
     oDiv1.onmouseout = function () {
+        setTimeout("", 2000);
         startMove(oDiv1, 'left', begin);
     };
     var oUl_course = document.getElementById('courseList');
