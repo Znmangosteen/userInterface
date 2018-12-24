@@ -35,7 +35,7 @@ function addCourse(testCourse) {
 		res += addClass(oCourse);
 	}
 	res +=
-		"</ul></div></div><div class=\"card-footer\"><input type=\"text\" class=\"mytxt\" id=\"coin\" placeholder=\"请输入选课币\"></div></div></div>";
+		"</ul></div></div><div class=\"card-footer\"><p class=\"replacer\"></p><input type=\"text\" class=\"mytxt\" id=\"coin\" placeholder=\"请输入选课币\"></div></div></div>";
 	
 		return res;
 }
@@ -53,8 +53,7 @@ function addClass(oCourse) {
 
 	return res;
 }
-
-
+	
 function fillTable(obj) {
 	oDiv = obj.parentElement;
 	oUl = oDiv.parentElement.parentElement;
@@ -68,6 +67,7 @@ function fillTable(obj) {
 	oCard = oUl.parentElement.parentElement.parentElement;
 	ot = document.getElementById("classtable");
 	aIn = oCard.getElementsByClassName('mytxt');
+	aReplacer = oCard.getElementsByClassName('replacer');
 	coin = aIn[0].value;
 	classinfo = '';
 	for (i in info){
@@ -88,6 +88,8 @@ function fillTable(obj) {
 		postData('DELETE', window.data[id]);
 		console.log('delete'+JSON.stringify(window.data[id]));
 		delete window.data[id];
+		aIn[0].setAttribute('style', 'display:unset');
+		aReplacer[0].setAttribute('style','none');
 	} else {
 		//判断课程冲突
 		if (hasConflict(ot, name, period)) {
@@ -132,6 +134,11 @@ function fillTable(obj) {
 		window.rcoin -= parseInt(coin);
 		postData('POST', window.data[id]);
 		console.log('post '+JSON.stringify(window.data[id]));
+		
+		// 选中课程禁止修改选课币
+		aIn[0].setAttribute('style', 'display:none')
+		aReplacer[0].innerHTML = "已设定选课币："+coin;
+		aReplacer[0].setAttribute('style','display:unset');
 	}
 	updateRcoin();
 }
