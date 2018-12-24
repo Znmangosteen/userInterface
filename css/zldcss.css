@@ -328,7 +328,8 @@
 .tbody1 td {
 	height: 85px;
 	width: 150px;
-    overflow:hidden;
+	overflow:hidden;
+	color: black;
     font-size: 9px;
 	text-align: center;
 	max-height: 85px;

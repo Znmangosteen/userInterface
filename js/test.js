@@ -225,9 +225,9 @@ function updateRcoin(){
 }
 
 function getRandomColor(){
-	colorset = ["#fabb00", "#fafa00", "#bbfa00", "#00fafa","#bb00fa", "#ffb3b3"];
+	colorset = ["#e1e3ff", "#f1e1ff", "#f8e1ff", "#ffe1e1","#e1fffe", "#e1ffe2", "#feffe1","#fff4e1", "#fee1ff"];
 	a = Math.floor(colorset.length*Math.random());
-	return "background-color:"+colorset[a];
+	return "border: 1px solid #e0e0e0; background-color:"+colorset[a];
 }
 
 function postData(_type, _data){
